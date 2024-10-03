@@ -1,14 +1,19 @@
 <?php
-$host = 'localhost';
-$user = 'root';
-$password = '';
-$dbname = 'my_database';
-
-// Connexion à la base de données
-$conn = new mysqli($host, $user, $password, $dbname);
-
-$sql = "SELECT * FROM users";
-$result = $conn->query($sql);
+    $host = 'localhost';
+    $user = 'root';
+    $password = '';
+    $dbname = 'my_database';
+    
+    try {
+        $pdo = new PDO("mysql:host=$host;dbname=$dbname", $user, $password);
+        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    
+        $sql = "SELECT * FROM users";
+        $stmt = $pdo->query($sql);
+        $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    } catch (PDOException $e) {
+        echo "Erreur: " . $e->getMessage();
+    }
 ?>
 
 <!DOCTYPE html>
