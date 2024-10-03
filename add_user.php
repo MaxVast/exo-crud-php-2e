@@ -22,6 +22,8 @@
             ]);
     
             echo "Utilisateur ajouté avec succès!";
+            header("Location: /list_user.php");
+            exit();
         }
     } catch (PDOException $e) {
         echo "Erreur: " . $e->getMessage();
