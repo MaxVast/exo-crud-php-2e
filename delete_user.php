@@ -15,7 +15,7 @@
             $stmt->execute([':id' => $id]);
     
             echo "Utilisateur supprimé avec succès!";
-            header("Location: list_users.php");
+            header("Location: /list_user.php");
             exit();
         }
     } catch (PDOException $e) {
