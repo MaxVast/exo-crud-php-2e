@@ -1,28 +1,31 @@
 <?php
-$host = 'localhost';
-$user = 'root';
-$password = '';
-$dbname = 'my_database';
-
-// Connexion à la base de données
-$conn = new mysqli($host, $user, $password, $dbname);
-
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $username = $_POST['username'];
-    $email = $_POST['email'];
-    $password = password_hash($_POST['password'], PASSWORD_BCRYPT);
-
-    $sql = "INSERT INTO users (username, email, password) VALUES (?, ?, ?)";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param('sss', $username, $email, $password);
+    $host = 'localhost';
+    $user = 'root';
+    $password = '';
+    $dbname = 'my_database';
     
-    if ($stmt->execute()) {
-        echo "Utilisateur ajouté avec succès!";
-    } else {
-        echo "Erreur: " . $conn->error;
+    try {
+        $pdo = new PDO("mysql:host=$host;dbname=$dbname", $user, $password);
+        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $username = $_POST['username'];
+            $email = $_POST['email'];
+            $password = password_hash($_POST['password'], PASSWORD_BCRYPT);
+    
+            $sql = "INSERT INTO users (username, email, password) VALUES (:username, :email, :password)";
+            $stmt = $pdo->prepare($sql);
+            $stmt->execute([
+                ':username' => $username,
+                ':email' => $email,
+                ':password' => $password
+            ]);
+    
+            echo "Utilisateur ajouté avec succès!";
+        }
+    } catch (PDOException $e) {
+        echo "Erreur: " . $e->getMessage();
     }
-}
-
 ?>
 
 <!DOCTYPE html>
