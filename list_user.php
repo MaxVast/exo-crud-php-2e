@@ -30,17 +30,17 @@
             <th>Email</th>
             <th>Actions</th>
         </tr>
-        <?php while ($row = $result->fetch_assoc()) : ?>
+        <?php foreach ($users as $user) : ?>
         <tr>
-            <td><?php echo $row['id']; ?></td>
-            <td><?php echo $row['username']; ?></td>
-            <td><?php echo $row['email']; ?></td>
+            <td><?php echo $user['id']; ?></td>
+            <td><?php echo $user['username']; ?></td>
+            <td><?php echo $user['email']; ?></td>
             <td>
-                <a href="edit_user.php?id=<?php echo $row['id']; ?>">Modifier</a>
-                <a href="delete_user.php?id=<?php echo $row['id']; ?>" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet utilisateur ?');">Supprimer</a>
+                <a href="edit_user.php?id=<?php echo $user['id']; ?>">Modifier</a>
+                <a href="delete_user.php?id=<?php echo $user['id']; ?>" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet utilisateur ?');">Supprimer</a>
             </td>
         </tr>
-        <?php endwhile; ?>
+        <?php endforeach; ?>
     </table>
 </body>
 </html>
