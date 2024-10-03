@@ -1,2 +1,2 @@
 <?php
-    header("Location: /exo-crud/list_user.php");
+    header("Location: /list_user.php");
